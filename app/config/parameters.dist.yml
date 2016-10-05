@@ -10,11 +10,7 @@ database:
   dbname: speedvacanze
   user: root
   password: ~
-
-memcached:
-  host: memcached
-  port: 11211
-  ttl:  500
+  charset: utf8mb4
 
 swiftmailer:
   host: smtp
@@ -27,8 +23,3 @@ swiftmailer:
 monolog:
   email.to: 'your-mail@mailserver.me'
   email.from: 'server@localhost'
-
-recaptcha:
-  public_key: 6LdYwgcUAAAAAB9fcIQVPKr3G3YWFvspGOz0Fuwi
-  private_key: 6LdYwgcUAAAAAFsiYgkATdGit1Q5zzOYTDt4bYKc
-  max_submissions: 5
