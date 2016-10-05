@@ -307,8 +307,8 @@ class Kernel extends Application implements KernelInterface
                 throw new \RuntimeException('Values provided for the Provider '.$provider.' must be an array.');
             }
 
-            //$this->addProvider($provider);
-            //$this->register(new $provider, $values);
+            $this->addProvider($provider);
+            $this->register(new $provider, $values);
         }
     }
 
@@ -336,8 +336,8 @@ class Kernel extends Application implements KernelInterface
                 throw new \RuntimeException('Command class '.$command.' must extends Knp\Command\Command.');
             }
 
-            //$this->addCommand($command);
-            //$console->add($commandClass);
+            $this->addCommand($command);
+            $console->add($commandClass);
         }
     }
 
