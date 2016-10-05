@@ -8,5 +8,5 @@ $app = new App\Application('prod');
 // Init the app
 $app->init();
 
-// Run the app
-$app->run();
+// Run the app in cached mode
+$app['http_cache']->run();

@@ -2,6 +2,6 @@ site:
   name: 'Mamba Framework'
   timezone: 'Europe/Rome'
   language: en
-  version: ~
+  version: 1.0.0
 
 

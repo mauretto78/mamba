@@ -17,7 +17,6 @@ abstract class AbstractType
      */
     protected $factory;
 
-
     /**
      * @var array
      */

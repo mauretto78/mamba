@@ -12,63 +12,71 @@
 namespace Mamba\Kernel;
 
 /**
- * Interface KernelInterface
+ * Interface KernelInterface.
  *
- * @package Mamba
  * @author Mauro Cassani
  */
 interface KernelInterface
 {
     /**
      * @param string $env
+     *
      * @return mixed
      */
     public function setEnv($env);
 
     /**
      * @param string $root
+     *
      * @return mixed
      */
     public function setRootDir($rootDir);
 
     /**
      * @param string $configDir
+     *
      * @return mixed
      */
     public function setConfigDir($configDir);
 
     /**
      * @param string $cacheDir
+     *
      * @return mixed
      */
     public function setCacheDir($cacheDir);
 
     /**
      * @param string $logsDir
+     *
      * @return mixed
      */
     public function setLogsDir($logsDir);
 
     /**
      * @param string $viewDir
+     *
      * @return mixed
      */
     public function setViewDir($viewDir);
 
     /**
      * @param string $serverName
+     *
      * @return mixed
      */
     public function setServerName($serverName);
 
     /**
      * @param $provider
+     *
      * @return mixed
      */
     public function addProvider($provider);
 
     /**
      * @param $command
+     *
      * @return mixed
      */
     public function addCommand($command);

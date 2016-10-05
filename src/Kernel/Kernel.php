@@ -83,6 +83,7 @@ class Kernel extends Application implements KernelInterface
 
     /**
      * @param string $env
+     *
      * @return mixed
      */
     public function setEnv($env)
@@ -92,6 +93,7 @@ class Kernel extends Application implements KernelInterface
 
     /**
      * @param string $root
+     *
      * @return mixed
      */
     public function setRootDir($rootDir)
@@ -101,6 +103,7 @@ class Kernel extends Application implements KernelInterface
 
     /**
      * @param string $configDir
+     *
      * @return mixed
      */
     public function setConfigDir($configDir)
@@ -110,6 +113,7 @@ class Kernel extends Application implements KernelInterface
 
     /**
      * @param string $cacheDir
+     *
      * @return mixed
      */
     public function setCacheDir($cacheDir)
@@ -119,6 +123,7 @@ class Kernel extends Application implements KernelInterface
 
     /**
      * @param string $logsDir
+     *
      * @return mixed
      */
     public function setLogsDir($logsDir)
@@ -128,6 +133,7 @@ class Kernel extends Application implements KernelInterface
 
     /**
      * @param string $viewDir
+     *
      * @return mixed
      */
     public function setViewDir($viewDir)
@@ -137,6 +143,7 @@ class Kernel extends Application implements KernelInterface
 
     /**
      * @param string $serverName
+     *
      * @return mixed
      */
     public function setServerName($serverName)
@@ -147,6 +154,7 @@ class Kernel extends Application implements KernelInterface
     /**
      * @param $provider
      * @param array $parameters
+     *
      * @return mixed
      */
     public function addProvider($provider)
@@ -156,6 +164,7 @@ class Kernel extends Application implements KernelInterface
 
     /**
      * @param $command
+     *
      * @return mixed
      */
     public function addCommand($command)
@@ -300,16 +309,37 @@ class Kernel extends Application implements KernelInterface
      */
     protected function _initProviders($providers)
     {
-        foreach ($providers as $provider => $values){
-
-            // check is $values is an array
-            if(!is_array($values)){
-                throw new \RuntimeException('Values provided for the Provider '.$provider.' must be an array.');
-            }
-
-            $this->addProvider($provider);
-            $this->register(new $provider, $values);
+        foreach ($providers['require'] as $provider => $values) {
+            $this->_registerProvider($provider, $values);
         }
+
+        if ($this->getEnv() === 'dev') {
+            foreach ($providers['require-dev'] as $provider => $values) {
+                $this->_registerProvider($provider, $values);
+            }
+        }
+    }
+
+    /**
+     * @param $provider
+     * @param array $values
+     */
+    protected function _registerProvider($provider, array $values)
+    {
+        // check is $values is an array
+        if (!is_array($values)) {
+            throw new \RuntimeException('Values provided for the Provider '.$provider.' must be an array.');
+        }
+
+        $providerInstance = new $provider();
+
+        // check if provider instance implements ServiceProviderInterface interface
+        if (!$providerInstance instanceof \Pimple\ServiceProviderInterface) {
+            throw new \RuntimeException('Provider '.$provider.' must be an instance of \Pimple\ServiceProviderInterface interface.');
+        }
+
+        $this->addProvider($provider);
+        $this->register($providerInstance, $values);
     }
 
     /**
@@ -322,10 +352,10 @@ class Kernel extends Application implements KernelInterface
         /** @var \Knp\Console\Application $console */
         $console = $this['console'];
 
-        foreach ($commands as $command => $params){
+        foreach ($commands as $command => $params) {
 
             // check is $values is an array
-            if(!is_array($params)){
+            if (!is_array($params)) {
                 throw new \RuntimeException('Params provided for the Command '.$command.' must be an array.');
             }
 

@@ -5,7 +5,7 @@ set_time_limit(0);
 require __DIR__.'/../vendor/autoload.php';
 
 // setup Application
-$app  = new App\Application('console');
+$app  = new App\Application('dev');
 
 // Init the app
 $app->init();

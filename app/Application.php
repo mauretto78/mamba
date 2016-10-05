@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App;
+namespace app;
 
 use Mamba\Kernel\Kernel;
 
@@ -25,81 +25,85 @@ class Application extends Kernel
         return [
             /*
             |--------------------------------------------------------------------------
-            | Silex providers
+            | Required Providers
             |--------------------------------------------------------------------------
             */
-            \Silex\Provider\SessionServiceProvider::class => [],
-            \Silex\Provider\CsrfServiceProvider::class => [],
-            \Silex\Provider\FormServiceProvider::class => [],
-            \Silex\Provider\LocaleServiceProvider::class => [],
-            \Silex\Provider\ValidatorServiceProvider::class => [],
-            \Silex\Provider\TranslationServiceProvider::class => [],
-            \Silex\Provider\ServiceControllerServiceProvider::class => [],
-            \Silex\Provider\HttpFragmentServiceProvider::class => [],
-            \Silex\Provider\HttpCacheServiceProvider::class => [
-                'http_cache.cache_dir' => $this->getCacheDir().'/http',
-            ],
-            \Silex\Provider\AssetServiceProvider::class => [
-                'assets.version' => @$this['config']['site']['version'],
-                'assets.version_format' => '%2$s/%1$s',
-                'assets.base_urls' => @$this['config']['assets']['cdn'],
-            ],
-            \Silex\Provider\DoctrineServiceProvider::class => [
-                'db.options' => [
-                    'driver'    => $this['config']['database']['driver'],
-                    'host'      => $this['config']['database']['host'],
-                    'dbname'    => $this['config']['database']['dbname'],
-                    'user'      => $this['config']['database']['user'],
-                    'password'  => $this['config']['database']['password'],
-                    'charset'   => $this['config']['database']['charset'],
+            'require' => [
+                \Silex\Provider\SessionServiceProvider::class => [],
+                \Silex\Provider\CsrfServiceProvider::class => [],
+                \Silex\Provider\FormServiceProvider::class => [],
+                \Silex\Provider\LocaleServiceProvider::class => [],
+                \Silex\Provider\ValidatorServiceProvider::class => [],
+                \Silex\Provider\TranslationServiceProvider::class => [],
+                \Silex\Provider\ServiceControllerServiceProvider::class => [],
+                \Silex\Provider\HttpFragmentServiceProvider::class => [],
+                \Silex\Provider\HttpCacheServiceProvider::class => [
+                    'http_cache.cache_dir' => $this->getCacheDir().'/http',
                 ],
-            ],
-            \Silex\Provider\MonologServiceProvider::class => [
-                'monolog.logfile' => $this->getLogsDir().'/'.$this->env.'.log',
-                'monolog.level' => constant('\Monolog\Logger::'.$this['config']['monolog']['level']),
-                'monolog.name' => $this['config']['monolog']['name'],
-                'monolog.permission' => null,
-                'monolog.bubble' => true,
-            ],
-            \Silex\Provider\SwiftmailerServiceProvider::class => [
-                'swiftmailer.options' => [
-                    'host' => $this['config']['swiftmailer']['host'],
-                    'port' => $this['config']['swiftmailer']['port'],
-                    'username' => $this['config']['swiftmailer']['username'],
-                    'password' => $this['config']['swiftmailer']['password'],
-                    'encryption' => $this['config']['swiftmailer']['encryption'],
-                    'auth_mode' => $this['config']['swiftmailer']['auth_mode'],
+                \Silex\Provider\AssetServiceProvider::class => [
+                    'assets.version' => @$this['config']['site']['version'],
+                    'assets.version_format' => '%2$s/%1$s',
+                    'assets.base_urls' => @$this['config']['assets']['base'],
                 ],
-            ],
-            \Silex\Provider\TwigServiceProvider::class => [
-                'twig.path' => $this->getViewDir(),
-                'twig.options' => [
-                    'auto_reload' => $this['debug'],
-                    'cache' => $this['debug'] ? false : $this->getCacheDir().'/twig',
+                \Silex\Provider\DoctrineServiceProvider::class => [
+                    'db.options' => [
+                        'driver' => $this['config']['database']['driver'],
+                        'host' => $this['config']['database']['host'],
+                        'dbname' => $this['config']['database']['dbname'],
+                        'user' => $this['config']['database']['user'],
+                        'password' => $this['config']['database']['password'],
+                        'charset' => $this['config']['database']['charset'],
+                    ],
+                ],
+                \Silex\Provider\MonologServiceProvider::class => [
+                    'monolog.logfile' => $this->getLogsDir().'/'.$this->env.'.log',
+                    'monolog.level' => constant('\Monolog\Logger::'.$this['config']['monolog']['level']),
+                    'monolog.name' => $this['config']['monolog']['name'],
+                    'monolog.permission' => null,
+                    'monolog.bubble' => true,
+                ],
+                \Silex\Provider\SwiftmailerServiceProvider::class => [
+                    'swiftmailer.options' => [
+                        'host' => $this['config']['swiftmailer']['host'],
+                        'port' => $this['config']['swiftmailer']['port'],
+                        'username' => $this['config']['swiftmailer']['username'],
+                        'password' => $this['config']['swiftmailer']['password'],
+                        'encryption' => $this['config']['swiftmailer']['encryption'],
+                        'auth_mode' => $this['config']['swiftmailer']['auth_mode'],
+                    ],
+                ],
+                \Silex\Provider\TwigServiceProvider::class => [
+                    'twig.path' => $this->getViewDir(),
+                    'twig.options' => [
+                        'auto_reload' => $this['debug'],
+                        'cache' => $this['debug'] ? false : $this->getCacheDir().'/twig',
+                    ],
+                ],
+                \Mamba\Providers\GuzzleServiceProvider::class => [
+                    'guzzle.base_uri' => $this['config']['guzzle']['base_uri'],
+                    'guzzle.timeout' => $this['config']['guzzle']['timeout'],
+                    'guzzle.debug' => false,
+                    'guzzle.request_options' => [
+                        'headers' => [
+                            'User-Agent' => $this['config']['guzzle']['user-agent'],
+                        ],
+                    ],
                 ],
             ],
             /*
             |--------------------------------------------------------------------------
-            | Third party providers. Register your Commands here.
+            | Required Providers (only DEV environment)
             |--------------------------------------------------------------------------
             */
-            \Knp\Provider\ConsoleServiceProvider::class => [
-                'console.name'              => $this['config']['console']['name'],
-                'console.version'           => $this['config']['console']['version'],
-                'console.project_directory' => __DIR__.'/..'
-            ],
-            \Silex\Provider\WebProfilerServiceProvider::class => [
-                'profiler.cache_dir' => $this->getCacheDir().'/profiler',
-                'profiler.mount_prefix' => '/_profiler', // this is the default
-            ],
-            \Mamba\Providers\GuzzleServiceProvider::class => [
-                'guzzle.base_uri' => $this['config']['guzzle']['base_uri'],
-                'guzzle.timeout' => $this['config']['guzzle']['timeout'],
-                'guzzle.debug' => false,
-                'guzzle.request_options' => [
-                    'headers' => [
-                        'User-Agent' => $this['config']['guzzle']['user-agent'],
-                    ],
+            'require-dev' => [
+                \Knp\Provider\ConsoleServiceProvider::class => [
+                    'console.name' => $this['config']['console']['name'],
+                    'console.version' => $this['config']['console']['version'],
+                    'console.project_directory' => __DIR__.'/..',
+                ],
+                \Silex\Provider\WebProfilerServiceProvider::class => [
+                    'profiler.cache_dir' => $this->getCacheDir().'/profiler',
+                    'profiler.mount_prefix' => '/_profiler', // this is the default
                 ],
             ],
         ];
@@ -115,11 +119,11 @@ class Application extends Kernel
         return [
             /*
             |--------------------------------------------------------------------------
-            | Third party Commands. Register your Commands here.
+            | Register your Commands here.
             |--------------------------------------------------------------------------
             */
             \Mamba\Command\RouterCommand::class => [
-                $this
+                $this,
             ],
         ];
     }

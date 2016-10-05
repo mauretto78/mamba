@@ -2,7 +2,7 @@ site:
   version: ~
 
 assets:
-  cdn: '//localhost:8888/assets'
+  base: '//localhost/mamba/web/assets'
 
 database:
   driver: pdo_mysql
