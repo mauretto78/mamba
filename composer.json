@@ -3,6 +3,7 @@
     "description": "Mamba Framework",
     "keywords": ["silex", "microframework"],
     "license": "MIT",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Mauro Cassani",
