@@ -1,0 +1,18 @@
+guzzle:
+  base_uri: '/'
+  timeout: 10
+  user-agent: 'Mamba Framework ApiClient'
+
+monolog:
+  # Email settings error report message.
+  email.subject: 'Error from site'
+  # Level of logging, defaults to DEBUG.
+  # Must be one of Logger::DEBUG, Logger::INFO, Logger::WARNING, Logger::ERROR.
+  # DEBUG will log everything, INFO will log everything except DEBUG, etc.
+  level: WARNING
+  # (optional): Name of the monolog channel, defaults to myapp.
+  name: 'Mamba Framework Logger'
+
+console:
+  name: 'Mamba Framework Console'
+  version: ~

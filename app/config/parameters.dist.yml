@@ -1,0 +1,34 @@
+site:
+  version: ~
+
+assets:
+  cdn: '//localhost:8888/assets'
+
+database:
+  driver: pdo_mysql
+  host: mysql
+  dbname: speedvacanze
+  user: root
+  password: ~
+
+memcached:
+  host: memcached
+  port: 11211
+  ttl:  500
+
+swiftmailer:
+  host: smtp
+  port: 25
+  username: user
+  password: pass
+  encryption: ~
+  auth_mode: ~
+
+monolog:
+  email.to: 'your-mail@mailserver.me'
+  email.from: 'server@localhost'
+
+recaptcha:
+  public_key: 6LdYwgcUAAAAAB9fcIQVPKr3G3YWFvspGOz0Fuwi
+  private_key: 6LdYwgcUAAAAAFsiYgkATdGit1Q5zzOYTDt4bYKc
+  max_submissions: 5
