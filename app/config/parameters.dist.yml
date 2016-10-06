@@ -5,21 +5,21 @@ assets:
   base: ~
 
 database:
-  driver: pdo_mysql
-  host: mysql
-  dbname: speedvacanze
-  user: root
-  password: ~
+  driver: DATABASE_DRIVER
+  host: DATABASE_HOST
+  dbname: DATABASE_DBNAME
+  user: DATABASE_USERNAME
+  password: DATABASE_PASSWORD
   charset: utf8mb4
 
 swiftmailer:
   host: smtp
-  port: 25
-  username: user
-  password: pass
+  port: MAILER_PORT
+  username: MAILER_USERNAME
+  password: MAILER_PASSWORD
   encryption: ~
   auth_mode: ~
 
 monolog:
-  email.to: 'your-mail@mailserver.me'
-  email.from: 'server@localhost'
+  email.to: MONOLOG_EMAIL_TO
+  email.from: MONOLOG_EMAIL_FROM

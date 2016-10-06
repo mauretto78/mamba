@@ -349,26 +349,33 @@ class Kernel extends Application implements KernelInterface
      */
     protected function _initCommands($commands)
     {
+        if ($this->getEnv() === 'dev') {
+            foreach ($commands as $command => $params) {
+                $this->_registerCommand($command, $params);
+            }
+        }
+
+    }
+
+    protected function _registerCommand($command, $params)
+    {
         /** @var \Knp\Console\Application $console */
         $console = $this['console'];
 
-        foreach ($commands as $command => $params) {
-
-            // check is $values is an array
-            if (!is_array($params)) {
-                throw new \RuntimeException('Params provided for the Command '.$command.' must be an array.');
-            }
-
-            $refl = new \ReflectionClass($command);
-            $commandClass = $refl->newInstanceArgs($params);
-
-            if (!is_subclass_of($commandClass, 'Knp\Command\Command')) {
-                throw new \RuntimeException('Command class '.$command.' must extends Knp\Command\Command.');
-            }
-
-            $this->addCommand($command);
-            $console->add($commandClass);
+        // check is $values is an array
+        if (!is_array($params)) {
+            throw new \RuntimeException('Params provided for the Command '.$command.' must be an array.');
         }
+
+        $refl = new \ReflectionClass($command);
+        $commandClass = $refl->newInstanceArgs($params);
+
+        if (!is_subclass_of($commandClass, 'Knp\Command\Command')) {
+            throw new \RuntimeException('Command class '.$command.' must extends Knp\Command\Command.');
+        }
+
+        $this->addCommand($command);
+        $console->add($commandClass);
     }
 
     /**

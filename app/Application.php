@@ -1,15 +1,6 @@
 <?php
 
-/*
- * This file is part of the Mamba microframework.
- *
- * (c) Mauro Cassani <assistenza@easy-grafica.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-namespace app;
+namespace App;
 
 use Mamba\Kernel\Kernel;
 
@@ -53,6 +44,19 @@ class Application extends Kernel
                         'user' => $this['config']['database']['user'],
                         'password' => $this['config']['database']['password'],
                         'charset' => $this['config']['database']['charset'],
+                    ],
+                ],
+                \Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider::class => [
+                    'orm.proxies_dir' => $this->getCacheDir().'/doctrine/proxies',
+                    'orm.em.options' => [
+                        'mappings' => [
+                            [
+                                'use_simple_annotation_reader' => false,
+                                'type' => 'annotation',
+                                'namespace' => 'Mamba\Entity',
+                                'path' => __DIR__.'/../src/Entity',
+                            ],
+                        ],
                     ],
                 ],
                 \Silex\Provider\MonologServiceProvider::class => [
