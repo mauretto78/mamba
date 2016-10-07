@@ -2,10 +2,22 @@
 
 namespace App;
 
-use Mamba\Kernel\Kernel;
+use Mamba\Base\Kernel\Kernel;
 
 class Application extends Kernel
 {
+    public function __construct($env)
+    {
+        parent::__construct($env);
+
+        $this->setRootDir(__DIR__.'/..');
+        $this->setConfigDir($this->getRootDir().'/app/config');
+        $this->setCacheDir($this->getRootDir().'/var/cache');
+        $this->setLogsDir($this->getRootDir().'/var/logs');
+        $this->setViewDir($this->getRootDir().'/src/Resources/views');
+        $this->setServerName(@$_SERVER['HTTP_HOST'] ?: 'localhost');
+    }
+    
     /**
      * Load Providers.
      *
@@ -83,7 +95,7 @@ class Application extends Kernel
                         'cache' => $this['debug'] ? false : $this->getCacheDir().'/twig',
                     ],
                 ],
-                \Mamba\Providers\GuzzleServiceProvider::class => [
+                \Mamba\Base\Providers\ClientServiceProvider::class => [
                     'guzzle.base_uri' => $this['config']['guzzle']['base_uri'],
                     'guzzle.timeout' => $this['config']['guzzle']['timeout'],
                     'guzzle.debug' => false,
@@ -126,14 +138,12 @@ class Application extends Kernel
             | Register your Commands here.
             |--------------------------------------------------------------------------
             */
-            \Mamba\Command\RouterCommand::class => [
-                $this,
-            ],
+            \Mamba\Command\RouterCommand::class => [$this],
         ];
     }
 
     /**
-     * Init Application.
+     * Init Applicatsion.
      *
      * @return $this
      */
