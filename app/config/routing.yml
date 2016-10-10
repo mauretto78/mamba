@@ -1,5 +1,0 @@
-routings:
-    home:
-        method: get
-        url: /
-        action: Mamba\Controller\HomeController::welcome

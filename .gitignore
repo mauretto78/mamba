@@ -1,4 +1,4 @@
-app/config/parameters.yml
+config/parameters.yml
 var/cache/*
 var/logs/*
 vendor

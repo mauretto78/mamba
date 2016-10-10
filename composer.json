@@ -10,7 +10,26 @@
         }
     ],
     "require": {
-        "mamba/base": "^1.1@dev"
+        "php": ">=5.5.9",
+        "doctrine/dbal": "~2.2",
+        "dflydev/doctrine-orm-service-provider": "^2.0",
+        "mamba/base": "^1.1@dev",
+        "monolog/monolog": "^1.21",
+        "silex/web-profiler": "^2.0",
+        "swiftmailer/swiftmailer": "^5.4",
+        "symfony/asset": "^3.1",
+        "symfony/config": "^3.1",
+        "symfony/monolog-bridge": "^3.1",
+        "symfony/security-csrf": "^3.1",
+        "symfony/translation": "^3.1",
+        "symfony/twig-bridge": "^3.1",
+        "symfony/validator": "^3.1",
+        "symfony/yaml": "^3.1",
+        "twig/twig": "^1.24",
+        "twig/extensions": "^1.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.1"
     },
     "autoload": {
         "psr-4": {

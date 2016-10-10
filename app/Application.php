@@ -2,22 +2,33 @@
 
 namespace App;
 
-use Mamba\Base\Kernel\Kernel;
+use Mamba\Base\App\BaseApplication;
+use Mamba\Base\Providers\BaseControllerServiceProvider;
 
-class Application extends Kernel
+class Application extends BaseApplication
 {
     public function __construct($env)
     {
         parent::__construct($env);
 
         $this->setRootDir(__DIR__.'/..');
-        $this->setConfigDir($this->getRootDir().'/app/config');
+        $this->setConfigDir($this->getRootDir().'/config');
         $this->setCacheDir($this->getRootDir().'/var/cache');
         $this->setLogsDir($this->getRootDir().'/var/logs');
         $this->setViewDir($this->getRootDir().'/src/Resources/views');
         $this->setServerName(@$_SERVER['HTTP_HOST'] ?: 'localhost');
     }
-    
+
+    public function getConfigFiles()
+    {
+        return [
+            'app.yml',
+            'config.yml',
+            'parameters.yml',
+            'routing.yml',
+        ];
+    }
+
     /**
      * Load Providers.
      *
@@ -151,12 +162,12 @@ class Application extends Kernel
     {
         $this->_setEnv();
         $this->_setDebug();
-        $this->_initConfig();
-        $this->_initProviders($this->getProviders());
-        $this->_initCommands($this->getCommands());
-        $this->_initLocale();
-        $this->_initRouting();
-        $this->_initErrorHandler();
+        $this->initConfig($this->getConfigFiles());
+        $this->initProviders($this->getProviders());
+        $this->initCommands($this->getCommands());
+        $this->initLocale();
+        $this->initRouting();
+        $this->initErrorHandler();
 
         return $this;
     }

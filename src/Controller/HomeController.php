@@ -2,13 +2,13 @@
 
 namespace Mamba\Controller;
 
-use App\Application;
+use Mamba\Base\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 
-class HomeController
+class HomeController extends BaseController
 {
-    public function welcomeAction(Application $app, Request $request)
+    public function welcomeAction(Request $request)
     {
-        return $app['twig']->render('home/welcome.html.twig', []);
+        return $this->render('home/welcome.html.twig');
     }
 }
