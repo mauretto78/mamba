@@ -3,6 +3,7 @@
 namespace App;
 
 use Mamba\Base\BaseApplication;
+use Mamba\Command\DebugDumpCommand;
 use Mamba\Providers\BaseControllerServiceProvider;
 
 class Application extends BaseApplication
@@ -24,7 +25,7 @@ class Application extends BaseApplication
      *
      * @return array
      */
-    public function getConfigFiles()
+    public function loadConfigFiles()
     {
         return [
             'app.yml',
@@ -39,7 +40,7 @@ class Application extends BaseApplication
      *
      * @return array
      */
-    public function getProviders()
+    public function loadProviders()
     {
         return [
             /*
@@ -142,11 +143,21 @@ class Application extends BaseApplication
     }
 
     /**
+     * Load Extensions.
+     *
+     * @return array
+     */
+    public function loadExtensions()
+    {
+        return [];
+    }
+
+    /**
      * Load Commands.
      *
      * @return array
      */
-    public function getCommands()
+    public function loadCommands()
     {
         return [
             /*
@@ -154,14 +165,17 @@ class Application extends BaseApplication
             | Register your Commands here.
             |--------------------------------------------------------------------------
             */
+            \Mamba\Command\DebugDumpCommand::class,
             \Mamba\Command\EntityCreateCommand::class,
             \Mamba\Command\EntityDeleteCommand::class,
+            \Mamba\Command\FormCreateCommand::class,
+            \Mamba\Command\FormDeleteCommand::class,
             \Mamba\Command\RouterDebugCommand::class,
         ];
     }
 
     /**
-     * Init Applicatsion.
+     * Init Application.
      *
      * @return $this
      */
@@ -169,9 +183,9 @@ class Application extends BaseApplication
     {
         $this->_setEnv();
         $this->_setDebug();
-        $this->initConfig($this->getConfigFiles());
-        $this->initProviders($this->getProviders());
-        $this->initCommands($this->getCommands());
+        $this->initConfig($this->loadConfigFiles());
+        $this->initProviders($this->loadProviders());
+        $this->initCommands($this->loadCommands());
         $this->initLocale();
         $this->initRouting();
         $this->initErrorHandler();
