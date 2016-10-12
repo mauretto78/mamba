@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Mamba\Base\App\BaseApplication;
-use Mamba\Base\Providers\BaseControllerServiceProvider;
+use Mamba\Base\BaseApplication;
+use Mamba\Providers\BaseControllerServiceProvider;
 
 class Application extends BaseApplication
 {
@@ -19,6 +19,11 @@ class Application extends BaseApplication
         $this->setServerName(@$_SERVER['HTTP_HOST'] ?: 'localhost');
     }
 
+    /**
+     * Load config files.
+     *
+     * @return array
+     */
     public function getConfigFiles()
     {
         return [
@@ -106,7 +111,7 @@ class Application extends BaseApplication
                         'cache' => $this['debug'] ? false : $this->getCacheDir().'/twig',
                     ],
                 ],
-                \Mamba\Base\Providers\ClientServiceProvider::class => [
+                \Mamba\Providers\ClientServiceProvider::class => [
                     'guzzle.base_uri' => $this['config']['guzzle']['base_uri'],
                     'guzzle.timeout' => $this['config']['guzzle']['timeout'],
                     'guzzle.debug' => false,
@@ -149,7 +154,9 @@ class Application extends BaseApplication
             | Register your Commands here.
             |--------------------------------------------------------------------------
             */
-            \Mamba\Command\RouterCommand::class => [$this],
+            \Mamba\Command\EntityCreateCommand::class,
+            \Mamba\Command\EntityDeleteCommand::class,
+            \Mamba\Command\RouterDebugCommand::class,
         ];
     }
 

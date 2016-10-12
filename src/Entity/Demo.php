@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This is an sample Entity only for demo purposes.
- *
- * As you can see, this Entity has an associated Repository.
- *
- * Remove this before flight.
- */
-
 namespace Mamba\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

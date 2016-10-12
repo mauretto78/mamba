@@ -2,7 +2,7 @@
 
 namespace Mamba\Controller;
 
-use Mamba\Base\Controller\BaseController;
+use Mamba\Base\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends BaseController

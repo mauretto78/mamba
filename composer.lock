@@ -919,12 +919,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mauretto78/mamba-base.git",
-                "reference": "0f8bd93ecdb970afe2a90b8035717c4fe453ee7c"
+                "reference": "01734a7a3b40db7fff1f19b2809ec3b6ac86a95d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mauretto78/mamba-base/zipball/0f8bd93ecdb970afe2a90b8035717c4fe453ee7c",
-                "reference": "0f8bd93ecdb970afe2a90b8035717c4fe453ee7c",
+                "url": "https://api.github.com/repos/mauretto78/mamba-base/zipball/01734a7a3b40db7fff1f19b2809ec3b6ac86a95d",
+                "reference": "01734a7a3b40db7fff1f19b2809ec3b6ac86a95d",
                 "shasum": ""
             },
             "require": {
@@ -946,7 +946,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Mamba\\Base\\": "src/"
+                    "Mamba\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -964,7 +964,7 @@
                 "microframework",
                 "silex"
             ],
-            "time": "2016-10-10 22:31:12"
+            "time": "2016-10-11 12:16:57"
         },
         {
             "name": "monolog/monolog",
