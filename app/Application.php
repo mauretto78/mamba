@@ -18,6 +18,7 @@ class Application extends BaseApplication
         $this->setLogsDir($this->getRootDir().'/var/logs');
         $this->setViewDir($this->getRootDir().'/src/Resources/views');
         $this->setServerName(@$_SERVER['HTTP_HOST'] ?: 'localhost');
+        $this->setConfigFiles($this->loadConfigFiles());
     }
 
     /**
@@ -27,6 +28,11 @@ class Application extends BaseApplication
      */
     public function loadConfigFiles()
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Register your config files here.
+        |--------------------------------------------------------------------------
+        */
         return [
             'app.yml',
             'config.yml',
@@ -36,19 +42,18 @@ class Application extends BaseApplication
     }
 
     /**
-     * Load Providers.
+     * Load Service Providers.
      *
      * @return array
      */
-    public function loadProviders()
+    public function loadServiceProviders()
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Register your Providers here.
+        |--------------------------------------------------------------------------
+        */
         return [
-            /*
-            |--------------------------------------------------------------------------
-            | Required Providers
-            |--------------------------------------------------------------------------
-            */
-            'require' => [
                 \Silex\Provider\SessionServiceProvider::class => [],
                 \Silex\Provider\CsrfServiceProvider::class => [],
                 \Silex\Provider\FormServiceProvider::class => [],
@@ -122,22 +127,25 @@ class Application extends BaseApplication
                         ],
                     ],
                 ],
+            ];
+    }
+
+    public function loadDevServiceProviders()
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Register your Providers here. (only DEV environment)
+        |--------------------------------------------------------------------------
+        */
+        return [
+            \Knp\Provider\ConsoleServiceProvider::class => [
+                'console.name' => $this['config']['console']['name'],
+                'console.version' => $this['config']['console']['version'],
+                'console.project_directory' => __DIR__.'/..',
             ],
-            /*
-            |--------------------------------------------------------------------------
-            | Required Providers (only DEV environment)
-            |--------------------------------------------------------------------------
-            */
-            'require-dev' => [
-                \Knp\Provider\ConsoleServiceProvider::class => [
-                    'console.name' => $this['config']['console']['name'],
-                    'console.version' => $this['config']['console']['version'],
-                    'console.project_directory' => __DIR__.'/..',
-                ],
-                \Silex\Provider\WebProfilerServiceProvider::class => [
-                    'profiler.cache_dir' => $this->getCacheDir().'/profiler',
-                    'profiler.mount_prefix' => '/_profiler', // this is the default
-                ],
+            \Silex\Provider\WebProfilerServiceProvider::class => [
+                'profiler.cache_dir' => $this->getCacheDir().'/profiler',
+                'profiler.mount_prefix' => '/_profiler', // this is the default
             ],
         ];
     }
@@ -149,6 +157,11 @@ class Application extends BaseApplication
      */
     public function loadExtensions()
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Register your Extensions here.
+        |--------------------------------------------------------------------------
+        */
         return [];
     }
 
@@ -159,12 +172,12 @@ class Application extends BaseApplication
      */
     public function loadCommands()
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Register your Commands here.
+        |--------------------------------------------------------------------------
+        */
         return [
-            /*
-            |--------------------------------------------------------------------------
-            | Register your Commands here.
-            |--------------------------------------------------------------------------
-            */
             \Mamba\Command\DebugDumpCommand::class,
             \Mamba\Command\EntityCreateCommand::class,
             \Mamba\Command\EntityDeleteCommand::class,
@@ -183,13 +196,14 @@ class Application extends BaseApplication
     {
         $this->_setEnv();
         $this->_setDebug();
-        $this->initConfig($this->loadConfigFiles());
-        $this->initProviders($this->loadProviders());
+        $this->initConfig();
+        $this->initProviders($this->loadServiceProviders());
+        $this->initDevProviders($this->loadDevServiceProviders());
         $this->initCommands($this->loadCommands());
         $this->initLocale();
         $this->initRouting();
         $this->initErrorHandler();
-
+        
         return $this;
     }
 }
