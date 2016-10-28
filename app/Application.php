@@ -188,11 +188,11 @@ class Application extends BaseApplication
     }
 
     /**
-     * Init Application.
+     * Start Application.
      *
      * @return $this
      */
-    public function init()
+    public function start()
     {
         $this->_setEnv();
         $this->_setDebug();
@@ -203,7 +203,7 @@ class Application extends BaseApplication
         $this->initLocale();
         $this->initRouting();
         $this->initErrorHandler();
-        
+
         return $this;
     }
 }

@@ -8,7 +8,7 @@ require __DIR__.'/../vendor/autoload.php';
 $app  = new App\Application('dev');
 
 // Init the app
-$app->init();
+$app->start();
 
 // instance of console
 /** @var Knp\Console\Application $console */

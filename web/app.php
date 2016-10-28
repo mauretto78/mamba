@@ -6,7 +6,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = new App\Application('prod');
 
 // Init the app
-$app->init();
+$app->start();
 
 // Run the app in cached mode
 $app['http_cache']->run();
